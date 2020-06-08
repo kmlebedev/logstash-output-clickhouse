@@ -27,6 +27,7 @@ Please note that the name of the plugin when used is `clickhouse`, it only suppo
 * `request_tolerance` (default: 5) - number of http request send retry attempts if response status code is not 200
 * `backoff_time` (default: 3) - time to wait in seconds for next retry attempt of connect or request
 * `skip_unknown` (0 or 1, default: 1) - skip unknown fields when inserting into clickhouse. Uses `--input_format_skip_unknown_fields` parameter
+* `date_time_input_format` (default: best_effort) - allows choosing a parser of the text representation of date and time
 
 Default batch size is 50, with a wait of at most 5 seconds per send. These can be tweaked with the parameters `flush_size` and `idle_flush_time` respectively.
 
