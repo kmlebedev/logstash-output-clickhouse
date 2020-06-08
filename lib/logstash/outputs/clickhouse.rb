@@ -22,7 +22,9 @@ class LogStash::Outputs::ClickHouse < LogStash::Outputs::Base
   config :table, :validate => :string, :required => true
   
   config :skip_unknown, :validate => :number, :default => 1, :inclusion => 0..1
-  
+
+  config :date_time_input_format, :validate => :string, :default => "best_effort"
+
   # Custom headers to use
   # format is `headers => ["X-My-Header", "%{host}"]`
   config :headers, :validate => :hash
@@ -75,7 +77,7 @@ class LogStash::Outputs::ClickHouse < LogStash::Outputs::Base
     @request_tokens = SizedQueue.new(@pool_max)
     @pool_max.times {|t| @request_tokens << true }
     @requests = Array.new
-    @http_query = "/?input_format_skip_unknown_fields=#{skip_unknown}&query=INSERT%20INTO%20#{table}%20FORMAT%20JSONEachRow"
+    @http_query = "/?input_format_skip_unknown_fields=#{skip_unknown}&date_time_input_format=#{date_time_input_format}&query=INSERT%20INTO%20#{table}%20FORMAT%20JSONEachRow"
 
     @hostnames_pool =
       parse_http_hosts(http_hosts,
